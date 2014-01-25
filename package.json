@@ -1,6 +1,6 @@
 {
   "name": "expressjs-unit-tests",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "",
   "main": "index.js",
   "scripts": {
@@ -17,7 +17,7 @@
     "async": "*",
     "should": "*"
   },
-  "repository": "",
+  "repository": "https://github.com/Iragne/ExpressUnitTests.git",
   "author": "Jean-Alexandre Iragne",
   "license": "MIT"
 }
