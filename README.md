@@ -22,7 +22,7 @@ unitTests.testGenerate(express_app,PORT, cb);
 var unitTests = require('expressjs-unit-tests');
 var app = require('../server.js').express_app();
 
-unitTests.testGenerate(app,3300, function(){});
+unitTests(app,3300, function(){});
 ```
 
 Use with mocha
