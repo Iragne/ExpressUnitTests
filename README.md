@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/Iragne/ExpressUnitTests.png?branch=master)](https://travis-ci.org/Iragne/ExpressUnitTests)
+
 Expressjs-unit-tests
 ===================
 
