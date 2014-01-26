@@ -75,7 +75,7 @@ var special_tests = {
 		}
 	]
 };
-options.overide = special_tests;
+options.override = special_tests;
 
 describe('Express Test Rooter ', function(){
 	describe('Get method', function(){

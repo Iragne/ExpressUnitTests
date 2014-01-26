@@ -42,7 +42,7 @@ var getUrlGet = module.exports.getUrlGet = function (map,options, cb) {
 		var req = map.get[i];
 		urls.push({url:req.path});
 	}
-	generate.generateGetUrls(urls,options.overide || {},function (err, urls_tests){
+	generate.generateGetUrls(urls,options.override || {},function (err, urls_tests){
 		cb(undefined,urls_tests);
 	});
 };
