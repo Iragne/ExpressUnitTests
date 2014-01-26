@@ -20,25 +20,34 @@
 // THE SOFTWARE.
 //
 
-module.exports.Number = function (tests_vars) {
+// var ret = {onlySet: false, variables:[]};
+// module.exports.Number = function (tests_vars) {
+// 	'use strict';
+// 	var ret = [0,1,42,Math.random()*1000,-1*Math.random()*456];
+// 	for (var i = 0; tests_vars && i < tests_vars.Number.length; i++) {
+// 		ret.push(tests_vars.Number[i]);
+// 	}
+// 	return ret;
+// };
+
+var clone = function (a){
 	'use strict';
-	var ret = [0,1,42,Math.random()*1000,-1*Math.random()*456];
-	for (var i = 0; tests_vars && i < tests_vars.Number.length; i++) {
-		ret.push(tests_vars.Number[i]);
-	}
-	return ret;
+	return JSON.parse(JSON.stringify(a));
 };
 
-module.exports.String = function (tests_vars) {
+module.exports.String = function (vars) {
 	'use strict';
-	var ret = ["('§ç!à('ç!§(!èçè'(çè'","a","<=>"];
-	for (var i = 0; tests_vars && i < tests_vars.String.length; i++) {
-		ret.push(tests_vars.String[i]);
+	var ret = ["('§ç!à('ç!§(!èçè'(çè'","a","<=>",0,1,42,Math.random()*1000,-1*Math.random()*456];
+	var tests_vars = vars.variables || [];
+	ret = vars.onlySet ? tests_vars : ret;
+	ret = clone(ret);
+	for (var i = 0; tests_vars && i < tests_vars.length; i++) {
+		ret.push(tests_vars[i]);
 	}
 	return ret;
 };
-module.exports.Array = function (tests_vars) {
-	'use strict';
-	// TODO ?
-};
+// module.exports.Array = function (tests_vars) {
+// 	'use strict';
+// 	// TODO ?
+// };
 

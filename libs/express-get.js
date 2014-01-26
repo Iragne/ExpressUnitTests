@@ -35,27 +35,27 @@ var getRoutes = module.exports.getRoutes = function (app, cb) {
 
 
 
-var getUrlGet = module.exports.getUrlGet = function (map, cb) {
+var getUrlGet = module.exports.getUrlGet = function (map,options, cb) {
 	'use strict';
 	var urls = [];
 	for (var i = 0; map && i < map.get.length; i++) {
 		var req = map.get[i];
 		urls.push({url:req.path});
 	}
-	generate.generateGetUrls(urls,function (err, urls_tests){
+	generate.generateGetUrls(urls,options.overide || {},function (err, urls_tests){
 		cb(undefined,urls_tests);
 	});
 };
 
-var testGenerate = module.exports.testGenerate = function (app,port, cb) {
+var testGenerate = module.exports.testGenerate = function (app, options, cb) {
 	'use strict';
 	getRoutes(app, function (err,map,Router){
-		getUrlGet(map,function (err,urls){
+		getUrlGet(map, options, function (err,urls){
 			async.map(urls,function (url,done_urls){
 				describe('Tests for url: '+url.baseUrl.url, function(){
 					async.map(url.tests,function (url_tests,done_test){
 						it('Ckeck for url:'+url_tests,function (endTest){
-							request.get("http://localhost:"+port+url_tests, function (e, r){
+							request.get("http://localhost:"+options.port+url_tests, function (e, r){
 								if (e || r.statusCode == 500){
 									done_test(r);
 									throw "Error for "+url_tests;

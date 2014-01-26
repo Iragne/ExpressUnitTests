@@ -27,7 +27,28 @@ var clone = function (a){
 	return JSON.parse(JSON.stringify(a));
 };
 
-var generateGetTests = function (url,paths,pos,ret){
+var generateParam = function (url,param,override){
+	'use strict';
+	var ret = {onlySet: false, variables:[]};
+	var urls = override.urls || [];
+	for (var i = 0; i < urls.length; i++) {
+		var route = urls[i];
+		var checkRoute = new RegExp(route.url);
+		if (checkRoute.test(url)){
+			var ar = Object.keys(route.params);
+			for (var j = 0; j < ar.length; j++) {
+				var attr = ar[j];
+				if (param == attr){
+					ret.onlySet = route.params[attr].onlySet;
+					ret.variables = route.params[attr].variables;
+				}
+			}
+		}
+	}
+	return ret;
+};
+
+var generateGetTests = function (url,paths,pos,ret,override){
 	'use strict';
 	var v = null;
 	var paths_rec = null;
@@ -35,42 +56,32 @@ var generateGetTests = function (url,paths,pos,ret){
 	if (pos >= nb)
 		return ret;
 	if (paths[pos].indexOf(":") < 0){
-		generateGetTests(url,paths,1+pos,ret);
+		generateGetTests(url,paths,1+pos,ret,override || {});
 		return ret;
 	}
-	for (var i = 0; i < testsVars.Number().length; i++) {
-		v = testsVars.Number()[i];
+	var param = paths[pos];
+	var params = testsVars.String(generateParam(url,param,override || {}));
+	for (var i = 0; i < params.length; i++) {
+		v = params[i];
 		paths[pos] = v;
 		if (pos == nb -1)
 			ret.push(paths.join("/"));
 		else{
 			// recusrion 
 			paths_rec = clone(paths);
-			generateGetTests(url,paths_rec,pos+1,ret);
-		}
-	}
-
-	for (i = 0; i < testsVars.String().length; i++) {
-		v = testsVars.String()[i];
-		paths[pos] = v;
-		if (pos == nb -1)
-			ret.push(paths.join("/"));
-		else{
-			// recusrion 
-			paths_rec = clone(paths);
-			generateGetTests(url,paths_rec,pos+1,ret);
+			generateGetTests(url,paths_rec,pos+1,ret,override || {});
 		}
 	}
 	return ret;
 };
 
-module.exports.generateGetUrls = function (urls, cb) {
+module.exports.generateGetUrls = function (urls,override, cb) {
 	'use strict';
 	var ret = [];
 	for (var i = 0; i < urls.length; i++) {
 		var url = urls[i].url;
 		var paths = url.split("/");
-		var tests = generateGetTests(url,paths,0,[url]);
+		var tests = generateGetTests(url,paths,0,[url],override);
 		ret.push({baseUrl:urls[i],tests:tests});
 		console.log("Generate",url,tests.length);
 	}

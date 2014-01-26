@@ -28,13 +28,59 @@ var generate = require('../libs/generate-tests.js');
 
 
 var server = require('./libs/server.js');
-
+var options = {port:3300};
 var app = server.createServer(3300);
+
+
+
+var special_tests = {
+	variables:[],
+	urls:[
+		{
+			url:"^.*",
+			params:{
+				":lang":{
+					variables:["en_EN"],
+					onlySet:false,
+				},
+				":client_key":{
+					variables:["coucoukey"],
+					onlySet:false,
+				}
+			},
+			method:{
+				post:{
+					params:{
+						login:{
+							variables:[""],
+							onlySet:true,
+						},
+						password:{
+							variables:[""],
+							onlySet:true,
+						}
+					}
+				}
+			}
+		},
+		{
+			url:"^/api.*",
+			params:{
+				":method":{
+					variables:["toto"],
+					onlySet:true,
+
+				}
+			}
+		}
+	]
+};
+options.overide = special_tests;
 
 describe('Express Test Rooter ', function(){
 	describe('Get method', function(){
 		it('check method generateGetUrls', function (done){
-			generate.generateGetUrls([{url:""}], function (err,map,Router){
+			generate.generateGetUrls([{url:""}],{}, function (err,map,Router){
 				done();
 			});
 		});
@@ -59,13 +105,13 @@ describe('Express Test Rooter ', function(){
 		});
 		it('check generate get', function (done){
 			express_get.getRoutes(app, function (err,map,Router){
-				express_get.getUrlGet(map, function (err,urls){
+				express_get.getUrlGet(map, options, function (err,urls){
 					done();
 				});
 			});
 		});
 		describe('check test url', function (){
-			express_get.testGenerate(app,3300, function(){});
+			express_get.testGenerate(app, options, function(){});
 		});
 		
 	});
