@@ -38,6 +38,13 @@ describe('Express untits Tests ', function(){
 ```
 
 
+TODOs
+-----
+* Add own url vars
+* Add vars for specific urls
+* Manage Post/PUT/DEL
+* Manage auth
+
 
 
 
