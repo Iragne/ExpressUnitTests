@@ -72,6 +72,7 @@ module.exports.generateGetUrls = function (urls, cb) {
 		var paths = url.split("/");
 		var tests = generateGetTests(url,paths,0,[url]);
 		ret.push({baseUrl:urls[i],tests:tests});
+		console.log("Generate",url,tests.length);
 	}
 	cb(undefined, ret);
 };

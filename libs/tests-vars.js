@@ -22,7 +22,7 @@
 
 module.exports.Number = function (tests_vars) {
 	'use strict';
-	var ret = [0,1,42,Math.random(),Math.random()*1000,-1*Math.random()*456];
+	var ret = [0,1,42,Math.random()*1000,-1*Math.random()*456];
 	for (var i = 0; tests_vars && i < tests_vars.Number.length; i++) {
 		ret.push(tests_vars.Number[i]);
 	}
@@ -31,7 +31,7 @@ module.exports.Number = function (tests_vars) {
 
 module.exports.String = function (tests_vars) {
 	'use strict';
-	var ret = ["('§ç!à('ç!§(!èçè'(çè'","a","<=>",""];
+	var ret = ["('§ç!à('ç!§(!èçè'(çè'","a","<=>"];
 	for (var i = 0; tests_vars && i < tests_vars.String.length; i++) {
 		ret.push(tests_vars.String[i]);
 	}
